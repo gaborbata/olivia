@@ -1,0 +1,4 @@
+#!/bin/sh
+mode=${1:-'enc'}
+pass=${2:-'secret'}
+node crypt.js $mode $pass
