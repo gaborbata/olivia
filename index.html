@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Bata Gábor">
+  <meta name="description" content="Olivia">
+  <meta name="theme-color" content="#8da05d">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://www.livike.hu">
+  <title>Olivia</title>
+  <link rel="stylesheet" href="asset/css/app.min.css">
+  <link rel="icon" href="asset/image/favicon.png">
+  <script defer src="asset/js/app.bundle.min.js"></script>
+</head>
+<body style="opacity:0">
+<main class="wrapper">
+
+<nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://www.livike.hu">
+      <img src="asset/image/logo.webp" class="img" alt="Olivia" width="600" height="128">
+    </a>
+    <a id="navigation-toggle" class="navigation-toggle float-right hidden" href="#">&equiv;</a>
+    <ul id="navigation-list" class="navigation-list float-right">
+
+      <li class="navigation-item hidden">
+        <a class="navigation-link" href="#calendar" title="Naptár">
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 4V2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M17 4V2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M2.5 9H21.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z" fill="currentColor"/>
+            <path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z" fill="currentColor"/>
+            <path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z" fill="currentColor"/>
+            <path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z" fill="currentColor"/>
+            <path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z" fill="currentColor"/>
+            <path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z" fill="currentColor"/>
+          </svg>
+          <span class="navigation-desc">Naptár</span>
+        </a>
+      </li>
+      <li class="navigation-item hidden">
+        <a class="navigation-link" href="#archive" title="Képek">
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="listBgCarrier" stroke-width="0"/>
+            <g id="listTracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+            <g id="listIconCarrier">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.2626 3.26045C7.38219 2.13044 8.33828 1.25 9.5 1.25H14.5C15.6617 1.25 16.6178 2.13044 16.7374 3.26045C17.5005 3.27599 18.1603 3.31546 18.7236 3.41895C19.4816 3.55818 20.1267 3.82342 20.6517 4.34835C21.2536 4.95027 21.5125 5.70814 21.6335 6.60825C21.75 7.47522 21.75 8.57754 21.75 9.94513V16.0549C21.75 17.4225 21.75 18.5248 21.6335 19.3918C21.5125 20.2919 21.2536 21.0497 20.6517 21.6517C20.0497 22.2536 19.2919 22.5125 18.3918 22.6335C17.5248 22.75 16.4225 22.75 15.0549 22.75H8.94513C7.57754 22.75 6.47522 22.75 5.60825 22.6335C4.70814 22.5125 3.95027 22.2536 3.34835 21.6517C2.74643 21.0497 2.48754 20.2919 2.36652 19.3918C2.24996 18.5248 2.24998 17.4225 2.25 16.0549V9.94513C2.24998 8.57754 2.24996 7.47522 2.36652 6.60825C2.48754 5.70814 2.74643 4.95027 3.34835 4.34835C3.87328 3.82342 4.51835 3.55818 5.27635 3.41895C5.83973 3.31546 6.49952 3.27599 7.2626 3.26045ZM7.26496 4.76087C6.54678 4.7762 5.99336 4.81234 5.54735 4.89426C4.98054 4.99838 4.65246 5.16556 4.40901 5.40901C4.13225 5.68577 3.9518 6.07435 3.85315 6.80812C3.75159 7.56347 3.75 8.56458 3.75 10V16C3.75 17.4354 3.75159 18.4365 3.85315 19.1919C3.9518 19.9257 4.13225 20.3142 4.40901 20.591C4.68577 20.8678 5.07435 21.0482 5.80812 21.1469C6.56347 21.2484 7.56458 21.25 9 21.25H15C16.4354 21.25 17.4365 21.2484 18.1919 21.1469C18.9257 21.0482 19.3142 20.8678 19.591 20.591C19.8678 20.3142 20.0482 19.9257 20.1469 19.1919C20.2484 18.4365 20.25 17.4354 20.25 16V10C20.25 8.56458 20.2484 7.56347 20.1469 6.80812C20.0482 6.07434 19.8678 5.68577 19.591 5.40901C19.3475 5.16556 19.0195 4.99838 18.4527 4.89426C18.0066 4.81234 17.4532 4.7762 16.735 4.76087C16.6058 5.88062 15.6544 6.75 14.5 6.75H9.5C8.34559 6.75 7.39424 5.88062 7.26496 4.76087ZM9.5 2.75C9.08579 2.75 8.75 3.08579 8.75 3.5V4.5C8.75 4.91421 9.08579 5.25 9.5 5.25H14.5C14.9142 5.25 15.25 4.91421 15.25 4.5V3.5C15.25 3.08579 14.9142 2.75 14.5 2.75H9.5ZM6.25 10.5C6.25 10.0858 6.58579 9.75 7 9.75H7.5C7.91421 9.75 8.25 10.0858 8.25 10.5C8.25 10.9142 7.91421 11.25 7.5 11.25H7C6.58579 11.25 6.25 10.9142 6.25 10.5ZM9.75 10.5C9.75 10.0858 10.0858 9.75 10.5 9.75H17C17.4142 9.75 17.75 10.0858 17.75 10.5C17.75 10.9142 17.4142 11.25 17 11.25H10.5C10.0858 11.25 9.75 10.9142 9.75 10.5ZM6.25 14C6.25 13.5858 6.58579 13.25 7 13.25H7.5C7.91421 13.25 8.25 13.5858 8.25 14C8.25 14.4142 7.91421 14.75 7.5 14.75H7C6.58579 14.75 6.25 14.4142 6.25 14ZM9.75 14C9.75 13.5858 10.0858 13.25 10.5 13.25H17C17.4142 13.25 17.75 13.5858 17.75 14C17.75 14.4142 17.4142 14.75 17 14.75H10.5C10.0858 14.75 9.75 14.4142 9.75 14ZM6.25 17.5C6.25 17.0858 6.58579 16.75 7 16.75H7.5C7.91421 16.75 8.25 17.0858 8.25 17.5C8.25 17.9142 7.91421 18.25 7.5 18.25H7C6.58579 18.25 6.25 17.9142 6.25 17.5ZM9.75 17.5C9.75 17.0858 10.0858 16.75 10.5 16.75H17C17.4142 16.75 17.75 17.0858 17.75 17.5C17.75 17.9142 17.4142 18.25 17 18.25H10.5C10.0858 18.25 9.75 17.9142 9.75 17.5Z" fill="currentColor"/>
+            </g>
+          </svg>
+          <span class="navigation-desc">Képek</span>
+        </a>
+      </li>
+      <li class="navigation-item hidden">
+        <a id="fullscreen" class="navigation-link" href="#" title="Teljes képernyő">
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="fsBgCarrier" stroke-width="0"/>
+            <g id="fsTracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+            <g id="fsIconCarrier">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9426 1.25H12.0574C14.3658 1.24999 16.1748 1.24998 17.5863 1.43975C19.031 1.63399 20.1711 2.03933 21.0659 2.93414C21.9607 3.82895 22.366 4.96897 22.5603 6.41371C22.75 7.82519 22.75 9.63423 22.75 11.9426V12.0574C22.75 14.3658 22.75 16.1748 22.5603 17.5863C22.366 19.031 21.9607 20.1711 21.0659 21.0659C20.1711 21.9607 19.031 22.366 17.5863 22.5603C16.1748 22.75 14.3658 22.75 12.0574 22.75H11.9426C9.63423 22.75 7.82519 22.75 6.41371 22.5603C4.96897 22.366 3.82895 21.9607 2.93414 21.0659C2.03933 20.1711 1.63399 19.031 1.43975 17.5863C1.24998 16.1748 1.24999 14.3658 1.25 12.0574V11.9426C1.24999 9.63423 1.24998 7.82519 1.43975 6.41371C1.63399 4.96897 2.03933 3.82895 2.93414 2.93414C3.82895 2.03933 4.96897 1.63399 6.41371 1.43975C7.82519 1.24998 9.63423 1.24999 11.9426 1.25ZM6.61358 2.92637C5.33517 3.09825 4.56445 3.42514 3.9948 3.9948C3.42514 4.56445 3.09825 5.33517 2.92637 6.61358C2.75159 7.91356 2.75 9.62178 2.75 12C2.75 14.3782 2.75159 16.0864 2.92637 17.3864C3.09825 18.6648 3.42514 19.4355 3.9948 20.0052C4.56445 20.5749 5.33517 20.9018 6.61358 21.0736C7.91356 21.2484 9.62178 21.25 12 21.25C14.3782 21.25 16.0864 21.2484 17.3864 21.0736C18.6648 20.9018 19.4355 20.5749 20.0052 20.0052C20.5749 19.4355 20.9018 18.6648 21.0736 17.3864C21.2484 16.0864 21.25 14.3782 21.25 12C21.25 9.62178 21.2484 7.91356 21.0736 6.61358C20.9018 5.33517 20.5749 4.56445 20.0052 3.9948C19.4355 3.42514 18.6648 3.09825 17.3864 2.92637C16.0864 2.75159 14.3782 2.75 12 2.75C9.62178 2.75 7.91356 2.75159 6.61358 2.92637ZM10.7474 5.99364C10.7509 6.40784 10.4179 6.74646 10.0038 6.74997C9.14788 6.75723 8.55011 6.7855 8.10037 6.8736C7.67158 6.95759 7.43423 7.08568 7.25996 7.25996C7.08568 7.43423 6.95759 7.67158 6.8736 8.10037C6.7855 8.55011 6.75723 9.14788 6.74997 10.0038C6.74646 10.4179 6.40784 10.7509 5.99364 10.7474C5.57944 10.7439 5.24652 10.4052 5.25003 9.99103C5.25724 9.14035 5.28357 8.41444 5.40157 7.81203C5.52367 7.18869 5.75316 6.64543 6.1993 6.1993C6.64543 5.75316 7.18869 5.52367 7.81203 5.40157C8.41444 5.28357 9.14035 5.25724 9.99103 5.25003C10.4052 5.24652 10.7439 5.57944 10.7474 5.99364ZM13.2502 5.99364C13.2537 5.57944 13.5923 5.24652 14.0065 5.25003C14.8572 5.25724 15.5831 5.28357 16.1855 5.40157C16.8089 5.52367 17.3521 5.75316 17.7983 6.1993C18.2444 6.64543 18.4739 7.18869 18.596 7.81203C18.714 8.41444 18.7403 9.14035 18.7475 9.99103C18.751 10.4052 18.4181 10.7439 18.0039 10.7474C17.5897 10.7509 17.2511 10.4179 17.2476 10.0038C17.2403 9.14788 17.2121 8.55011 17.124 8.10037C17.04 7.67158 16.9119 7.43423 16.7376 7.25996C16.5633 7.08568 16.326 6.95759 15.8972 6.8736C15.4475 6.7855 14.8497 6.75723 13.9938 6.74997C13.5796 6.74646 13.2467 6.40784 13.2502 5.99364ZM5.99364 13.2502C6.40784 13.2467 6.74646 13.5796 6.74997 13.9938C6.75723 14.8497 6.7855 15.4475 6.8736 15.8972C6.95759 16.326 7.08568 16.5633 7.25996 16.7376C7.43423 16.9119 7.67158 17.04 8.10037 17.124C8.55011 17.2121 9.14788 17.2403 10.0038 17.2476C10.4179 17.2511 10.7509 17.5897 10.7474 18.0039C10.7439 18.4181 10.4052 18.751 9.99103 18.7475C9.14035 18.7403 8.41444 18.714 7.81203 18.596C7.18869 18.4739 6.64543 18.2444 6.1993 17.7983C5.75316 17.3521 5.52367 16.8089 5.40157 16.1855C5.28357 15.5831 5.25724 14.8572 5.25003 14.0065C5.24652 13.5923 5.57944 13.2537 5.99364 13.2502ZM18.0039 13.2502C18.4181 13.2537 18.751 13.5923 18.7475 14.0065C18.7403 14.8572 18.714 15.5831 18.596 16.1855C18.4739 16.8089 18.2444 17.3521 17.7983 17.7983C17.3521 18.2444 16.8089 18.4739 16.1855 18.596C15.5831 18.714 14.8572 18.7403 14.0065 18.7475C13.5923 18.751 13.2537 18.4181 13.2502 18.0039C13.2467 17.5897 13.5796 17.2511 13.9938 17.2476C14.8497 17.2403 15.4475 17.2121 15.8972 17.124C16.326 17.04 16.5633 16.9119 16.7376 16.7376C16.9119 16.5633 17.04 16.326 17.124 15.8972C17.2121 15.4475 17.2403 14.8497 17.2476 13.9938C17.2511 13.5796 17.5897 13.2467 18.0039 13.2502Z" fill="currentColor"/>
+            </g>
+          </svg>
+          <span class="navigation-desc">Teljes képernyő</span>
+        </a>
+      </li>
+      <li class="navigation-item hidden">
+        <a id="dark-mode" class="navigation-link" href="#" title="Éjszaka/napvilág">
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="sunBgCarrier" stroke-width="0"/>
+            <g id="sunTracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+            <g id="sunIconCarrier">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V4C12.75 4.41421 12.4142 4.75 12 4.75C11.5858 4.75 11.25 4.41421 11.25 4V2C11.25 1.58579 11.5858 1.25 12 1.25ZM3.66865 3.71609C3.94815 3.41039 4.42255 3.38915 4.72825 3.66865L6.95026 5.70024C7.25596 5.97974 7.2772 6.45413 6.9977 6.75983C6.7182 7.06553 6.2438 7.08677 5.9381 6.80727L3.71609 4.77569C3.41039 4.49619 3.38915 4.02179 3.66865 3.71609ZM20.3314 3.71609C20.6109 4.02179 20.5896 4.49619 20.2839 4.77569L18.0619 6.80727C17.7562 7.08677 17.2818 7.06553 17.0023 6.75983C16.7228 6.45413 16.744 5.97974 17.0497 5.70024L19.2718 3.66865C19.5775 3.38915 20.0518 3.41039 20.3314 3.71609ZM12 7.75C9.65279 7.75 7.75 9.65279 7.75 12C7.75 14.3472 9.65279 16.25 12 16.25C14.3472 16.25 16.25 14.3472 16.25 12C16.25 9.65279 14.3472 7.75 12 7.75ZM6.25 12C6.25 8.82436 8.82436 6.25 12 6.25C15.1756 6.25 17.75 8.82436 17.75 12C17.75 15.1756 15.1756 17.75 12 17.75C8.82436 17.75 6.25 15.1756 6.25 12ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H4C4.41421 11.25 4.75 11.5858 4.75 12C4.75 12.4142 4.41421 12.75 4 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM19.25 12C19.25 11.5858 19.5858 11.25 20 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H20C19.5858 12.75 19.25 12.4142 19.25 12ZM17.0255 17.0252C17.3184 16.7323 17.7933 16.7323 18.0862 17.0252L20.3082 19.2475C20.6011 19.5404 20.601 20.0153 20.3081 20.3082C20.0152 20.6011 19.5403 20.601 19.2475 20.3081L17.0255 18.0858C16.7326 17.7929 16.7326 17.3181 17.0255 17.0252ZM6.97467 17.0253C7.26756 17.3182 7.26756 17.7931 6.97467 18.086L4.75244 20.3082C4.45955 20.6011 3.98468 20.6011 3.69178 20.3082C3.39889 20.0153 3.39889 19.5404 3.69178 19.2476L5.91401 17.0253C6.2069 16.7324 6.68177 16.7324 6.97467 17.0253ZM12 19.25C12.4142 19.25 12.75 19.5858 12.75 20V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V20C11.25 19.5858 11.5858 19.25 12 19.25Z" fill="currentColor"/>
+            </g>
+          </svg>
+          <span class="navigation-desc">Éjszaka/napvilág</span>
+        </a>
+      </li>
+      <li class="navigation-item hidden">
+        <a id="random-image" class="navigation-link" href="#" title="Lepj meg!">
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 12H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M12 2V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M13 12C13 14.2091 14.7909 16 17 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M11 12C11 14.2091 9.20914 16 7 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M12 10.0352C12 8.54529 13.014 7.24659 14.4594 6.88524C16.0631 6.48431 17.5158 7.93697 17.1148 9.5407C16.7535 10.9861 15.4548 12.0001 13.9649 12.0001H12V10.0352Z" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12.0001 10.0352C12.0001 8.54529 10.9861 7.24659 9.5407 6.88524C7.93698 6.48431 6.48431 7.93697 6.88524 9.5407C7.24659 10.9861 8.54529 12.0001 10.0352 12.0001H12.0001V10.0352Z" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span class="navigation-desc">Lepj meg!</span>
+        </a>
+      </li>
+      <li class="navigation-item hidden">
+        <a id="logout" class="navigation-link" href="#logout" title="Kijelentkezés">
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="logoutBgCarrier" stroke-width="0"/>
+            <g id="logoutTracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+            <g id="logoutIconCarrier">
+              <path d="M14.9453 1.25C13.5778 1.24998 12.4754 1.24996 11.6085 1.36652C10.7084 1.48754 9.95048 1.74643 9.34857 2.34835C8.82363 2.87328 8.55839 3.51836 8.41916 4.27635C8.28387 5.01291 8.25799 5.9143 8.25196 6.99583C8.24966 7.41003 8.58357 7.74768 8.99778 7.74999C9.41199 7.7523 9.74964 7.41838 9.75194 7.00418C9.75803 5.91068 9.78643 5.1356 9.89448 4.54735C9.99859 3.98054 10.1658 3.65246 10.4092 3.40901C10.686 3.13225 11.0746 2.9518 11.8083 2.85315C12.5637 2.75159 13.5648 2.75 15.0002 2.75H16.0002C17.4356 2.75 18.4367 2.75159 19.1921 2.85315C19.9259 2.9518 20.3144 3.13225 20.5912 3.40901C20.868 3.68577 21.0484 4.07435 21.1471 4.80812C21.2486 5.56347 21.2502 6.56459 21.2502 8V16C21.2502 17.4354 21.2486 18.4365 21.1471 19.1919C21.0484 19.9257 20.868 20.3142 20.5912 20.591C20.3144 20.8678 19.9259 21.0482 19.1921 21.1469C18.4367 21.2484 17.4356 21.25 16.0002 21.25H15.0002C13.5648 21.25 12.5637 21.2484 11.8083 21.1469C11.0746 21.0482 10.686 20.8678 10.4092 20.591C10.1658 20.3475 9.99859 20.0195 9.89448 19.4527C9.78643 18.8644 9.75803 18.0893 9.75194 16.9958C9.74964 16.5816 9.41199 16.2477 8.99778 16.25C8.58357 16.2523 8.24966 16.59 8.25196 17.0042C8.25799 18.0857 8.28387 18.9871 8.41916 19.7236C8.55839 20.4816 8.82363 21.1267 9.34857 21.6517C9.95048 22.2536 10.7084 22.5125 11.6085 22.6335C12.4754 22.75 13.5778 22.75 14.9453 22.75H16.0551C17.4227 22.75 18.525 22.75 19.392 22.6335C20.2921 22.5125 21.0499 22.2536 21.6519 21.6517C22.2538 21.0497 22.5127 20.2919 22.6337 19.3918C22.7503 18.5248 22.7502 17.4225 22.7502 16.0549V7.94513C22.7502 6.57754 22.7503 5.47522 22.6337 4.60825C22.5127 3.70814 22.2538 2.95027 21.6519 2.34835C21.0499 1.74643 20.2921 1.48754 19.392 1.36652C18.525 1.24996 17.4227 1.24998 16.0551 1.25H14.9453Z" fill="currentColor"/>
+              <path d="M15 11.25C15.4142 11.25 15.75 11.5858 15.75 12C15.75 12.4142 15.4142 12.75 15 12.75H4.02744L5.98809 14.4306C6.30259 14.7001 6.33901 15.1736 6.06944 15.4881C5.79988 15.8026 5.3264 15.839 5.01191 15.5694L1.51191 12.5694C1.34567 12.427 1.25 12.2189 1.25 12C1.25 11.7811 1.34567 11.573 1.51191 11.4306L5.01191 8.43056C5.3264 8.16099 5.79988 8.19741 6.06944 8.51191C6.33901 8.8264 6.30259 9.29988 5.98809 9.56944L4.02744 11.25H15Z" fill="currentColor"/>
+            </g>
+          </svg>
+          <span class="navigation-desc">Kijelentkezés</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</nav>
+
+<section id="login" class="container page hidden">
+  <h1>Belépés</h1>
+  <blockquote id="login-warning" class="hidden">
+    <p>
+      Sikertelen belépés.
+    </p>
+  </blockquote>
+  <blockquote id="browser-warning">
+    <p>
+      Úgy tűnik, hogy egy elavult böngészőt használsz, amely nem támogatja megfelelően a modern webes szabványokat,
+      és ezért sok más mellett nem alkalmas ezen weboldal megtekintésére sem.
+      Frissíts valamelyik modernebb böngészőre az alábbiak közül:
+    </p>
+    <ul>
+      <li><a href="https://www.google.com/intl/hu/chrome/">Google Chrome</a></li>
+      <li><a href="https://www.mozilla.org/hu/firefox/">Mozilla Firefox</a></li>
+      <li><a href="https://www.microsoft.com/hu-hu/edge/">Microsoft Edge</a></li>
+    </ul>
+  </blockquote>
+  <form id="login-form" action="#">
+    <fieldset>
+      <label for="password">Az oldal jelszóval védett, kérlek add meg a jelszót</label>
+      <input type="password" placeholder="Jelszó" id="password">
+      <div class="float-right">
+        <input class="button-primary" type="submit" value="Belépés">
+      </div>
+    </fieldset>
+  </form>
+  <blockquote>
+    <p>
+      A weboldalon található tartalmak személyes adatokat tartalmaznak, és kizárólag a jogosult felhasználók számára érhetők el.
+      A tartalmak megosztása, másolása, terjesztése vagy bármilyen más módon történő felhasználása szigorúan tilos,
+      és a személyiségi jogok megsértését vonhatja maga után.
+    </p>
+  </blockquote>
+</section>
+
+<section id="image" class="container page hidden">
+  <div class="image-container">
+    <h1 class="image-title"></h1>
+    <img src="asset/image/loading.webp" alt="Betöltés" oncontextmenu="return false;" draggable="false">
+    <video class="hidden" controls disablepictureinpicture playsinline="true" loop="true" poster="asset/image/loading.webp" controlslist="nodownload" oncontextmenu="return false;" draggable="false"></video>
+    <p class="image-description"></p>
+    <span class="close-button hidden">
+      <svg width="42px" height="42px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="close_bgCarrier" stroke-width="0"/>
+        <g id="close_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+        <g id="close_iconCarrier">
+          <path opacity="0.5" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22Z" fill="#404040"/>
+          <path d="M8.96967 8.96967C9.26256 8.67678 9.73744 8.67678 10.0303 8.96967L12 10.9394L13.9697 8.96969C14.2626 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0607 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0304 15.0303C9.73746 15.3232 9.26258 15.3232 8.96969 15.0303C8.6768 14.7374 8.6768 14.2626 8.96969 13.9697L10.9394 12L8.96967 10.0303C8.67678 9.73744 8.67678 9.26256 8.96967 8.96967Z" fill="#C0C0C0"/>
+        </g>
+      </svg>
+    </span>
+  </div>
+  <div class="pagination">
+    <a class="button button-outline" href="#">
+      &lt;&lt; <span class="pagination-caption">Első</span>
+    </a>
+    <a class="button button-outline" href="#">
+      &lt; <span class="pagination-caption">Előző</span>
+    </a>
+    <a class="button button-outline" href="#">
+      <span class="pagination-caption">Következő</span> &gt;
+    </a>
+    <a class="button button-outline" href="#">
+      <span class="pagination-caption">Legújabb</span> &gt;&gt;
+    </a>
+  </div>
+</section>
+
+<section id="archive" class="container page hidden">
+  <h1>Archív</h1>
+  <p>Az összes kép listája</p>
+  <ul class="archive-list">
+  </ul>
+</section>
+
+<section id="calendar" class="container page hidden">
+    <div class="calendar-container">
+    <div class="calendar-header">
+        <div class="calendar-controls">
+            <div class="date-selectors">
+                <select id="year-selector"></select>
+                <select id="month-selector">
+                    <option value="0">jan.</option>
+                    <option value="1">febr.</option>
+                    <option value="2">márc.</option>
+                    <option value="3">ápr.</option>
+                    <option value="4">máj.</option>
+                    <option value="5">jún.</option>
+                    <option value="6">júl.</option>
+                    <option value="7">aug.</option>
+                    <option value="8">szept.</option>
+                    <option value="9">okt.</option>
+                    <option value="10">nov.</option>
+                    <option value="11">dec.</option>
+                </select>
+            </div>
+            <div class="navigation-buttons">
+                <button class="button button-outline" id="prev-month">&lt;</button>
+                <button class="button button-outline" id="latest-month">=</button>
+                <button class="button button-outline" id="next-month">&gt;</button>
+            </div>
+        </div>
+    </div>
+    <div class="calendar-grid" id="calendar-grid" data-day-names="Hét,Ked,Sze,Csü,Pén,Szo,Vas">
+    </div>
+    </div>
+</section>
+
+<section id="error" class="container page hidden">
+  <div>
+    <p style="text-align: center; font-size: 2rem;">
+      Jajj, átmeneti gubancba ütköztünk, kérlek nézz vissza később!
+      <br>
+      <img src="asset/image/houston.webp" style="max-height: 350px;">
+    </p>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
