@@ -1,4 +1,5 @@
 source/
 crypt.sh
+*.log
 #asset/content/**
 #!asset/content/app.arc

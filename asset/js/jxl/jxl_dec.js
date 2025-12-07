@@ -1242,9 +1242,10 @@ var Module = function (n) {
   return nO(), n.ready;
 };
 
+var mod = Module({ noInitialRun: !0 });
 addEventListener("message", function (message) {
   if (message.data.imageBuffer) {
-    Module({ noInitialRun: !0 })
+    mod
       .then(function (module) {
         var decodedImage = module.decode(message.data.imageBuffer);
         if (!decodedImage) {

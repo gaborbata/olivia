@@ -8,12 +8,23 @@ var App = App || (function () {
   var appThemeKey = 'app_theme';
   var appTokenInMemory = '';
   var cacheBucket = 'cache__'
-  var cacheExpirationMinutes = 5;
-  var dataExt = 'arc';
+  var cacheExpirationMinutes = 10;
+  var dataExt = ARC.extension;
 
   /* -------------------------------------------------------------------------- */
   /* page variables/functions                                                   */
   /* -------------------------------------------------------------------------- */
+  function getResponseBytes(response) {
+    if ('bytes' in Response.prototype) {
+      return response.bytes();
+    } else {
+      return response.arrayBuffer()
+        .then(function (buffer) {
+          return buffer ? new Uint8Array(buffer) : null;
+        });
+    }
+  }
+
   var pages = new Map(Array.from(document.querySelectorAll('.page')).map(function (page) {
     return [page.id, page];
   }));
@@ -143,7 +154,7 @@ var App = App || (function () {
     imageTimeoutId = setTimeout(function () {
       fetch(appConfig.storage + '/' + prefix + '/' + name + '.' + dataExt)
         .then(function (response) {
-          return response.ok ? response.bytes() : null;
+          return response.ok ? getResponseBytes(response) : null;
         })
         .then(function (response) {
           try {
@@ -470,14 +481,18 @@ var App = App || (function () {
       mode: cryptoConfig.mode
     });
     var encryptedFileBytes = wordArrayToByteArray(salt.concat(iv).concat(encrypted.ciphertext));
-    var arcHeaderBytes = new Uint8Array(29); //ARC.createArcHeader(encryptedFileBytes, name, date);
-    var endOfFile = new Uint8Array(2); // ARC.endOfFile
+    var arcHeaderBytes = ARC.createArcHeader(encryptedFileBytes);
+    var endOfFile = new Uint8Array(ARC.eof);
     return new Uint8Array(Array.from(arcHeaderBytes).concat(Array.from(encryptedFileBytes)).concat(endOfFile));
   }
 
   function decrypt(encrypted, password) {
-    // arc header size: 29, eof: 2
-    var message = byteArrayToWordArray(encrypted, 29, 2);
+    if (encrypted[0] != ARC.memberFlag || encrypted[1] != ARC.storeMethod) {
+      throw new Error('invalid/unsupported ARC header');
+    }
+
+    var message = byteArrayToWordArray(encrypted, ARC.headerSize, ARC.eofSize);
+
     var words = message.words;
 
     var saltSize = cryptoConfig.saltSize / 32;
@@ -522,7 +537,7 @@ var App = App || (function () {
     return result;
   }
 
-  function wordArrayToByteArrayCjs(wordArray) {
+  function wordArrayToByteArrayV1(wordArray) {
     var words = wordArray.words;
     var sigBytes = wordArray.sigBytes;
     var bytes = new Uint8Array(sigBytes);
@@ -533,6 +548,39 @@ var App = App || (function () {
   }
 
   function byteArrayToWordArray(bytes, offset, eofSize) {
+    var offset = offset || 0;
+    var eofSize = eofSize || 0;
+    var bytesLength = bytes.length - offset - eofSize;
+    var words = new Array(Math.ceil(bytesLength / 4));
+
+    var i = 0;
+    var alignedLength = bytesLength - (bytesLength % 4);
+
+    for (; i < alignedLength; i += 4) {
+      var word = (bytes[i + offset] << 24) |
+        ((bytes[i + offset + 1] & 0xff) << 16) |
+        ((bytes[i + offset + 2] & 0xff) << 8) |
+        (bytes[i + offset + 3] & 0xff);
+      words[i >>> 2] = word;
+    }
+
+    // handle remaining bytes
+    if (i < bytesLength) {
+      var word = 0;
+      var shift = 24;
+      var remaining = bytesLength - i;
+
+      for (var j = 0; j < remaining; j++) {
+        word |= (bytes[i + offset + j] & 0xff) << shift;
+        shift -= 8;
+      }
+      words[i >>> 2] = word;
+    }
+
+    return CryptoJS.lib.WordArray.create(words, bytesLength);
+  }
+
+  function byteArrayToWordArrayV1(bytes, offset, eofSize) {
     var offset = offset || 0;
     var eofSize = eofSize || 0;
     var bytesLength = bytes.length - offset - eofSize;
@@ -550,11 +598,15 @@ var App = App || (function () {
     var cachedFetch = null;
     var cachedConfig = null;
     LSC.setBucket(cacheBucket);
-    var cachedStr = LSC.get(cacheKey);
-    if (cachedStr && cachedStr.length > 0) {
-      cachedConfig = Uint8Array.fromBase64(cachedStr);
-    }
+    var cachedResponseBase64 = LSC.get(cacheKey);
     LSC.resetBucket();
+    if (cachedResponseBase64 && cachedResponseBase64.length > 0) {
+      if (typeof Uint8Array.fromBase64 === 'function') {
+        cachedConfig = Uint8Array.fromBase64(cachedResponseBase64);
+      } else {
+        cachedConfig = wordArrayToByteArray(CryptoJS.enc.Base64.parse(cachedResponseBase64));
+      }
+    }
     if (cachedConfig) {
       cachedFetch = new Promise(function (resolve) {
         resolve(cachedConfig);
@@ -562,12 +614,18 @@ var App = App || (function () {
     } else {
       cachedFetch = fetch(url)
         .then(function (response) {
-          return response.ok ? response.bytes() : null;
+          return response.ok ? getResponseBytes(response) : null;
         })
         .then(function (response) {
           if (response) {
+            var responseBase64 = '';
+            if (typeof Uint8Array.prototype.toBase64 === 'function') {
+              responseBase64 = response.toBase64();
+            } else {
+              responseBase64 = byteArrayToWordArray(response).toString(CryptoJS.enc.Base64);
+            }
             LSC.setBucket(cacheBucket);
-            LSC.set(cacheKey, response.toBase64(), cacheExpirationMinutes);
+            LSC.set(cacheKey, responseBase64, cacheExpirationMinutes);
             LSC.resetBucket();
           }
           return response;
@@ -583,7 +641,17 @@ var App = App || (function () {
         }
         var token = CryptoJS.AES.decrypt(appToken, appTokenKey).toString(CryptoJS.enc.Utf8);
         var decrypted = decrypt(response, token);
-        var json = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+
+        var decryptedString = null;
+        try {
+          // assume zlib is used for config files
+          decryptedString = pako.inflate(wordArrayToByteArray(decrypted), { to: 'string' });
+        } catch (error) {
+          // fallback to uncompressed
+          decryptedString = decrypted.toString(CryptoJS.enc.Utf8);
+        }
+
+        var json = JSON.parse(decryptedString);
         if (Object.keys(json).length == 0) {
           throw new Error('config must not be empty: ' + url);
         }
@@ -626,7 +694,8 @@ var App = App || (function () {
         showElement(document.querySelector('.navigation-toggle'), true);
         showElements(document.querySelectorAll('.navigation-item'), true);
         if (window.location.hash == '#login') {
-          changeHash(loginRedirectHash || ('#image-' + (images.length - 1)));
+          //changeHash(loginRedirectHash || ('#image-' + (images.length - 1)));
+          changeHash(loginRedirectHash || '#image-latest');
         } else {
           changeHash(window.location.hash);
         }
@@ -713,7 +782,8 @@ var App = App || (function () {
       prepareImagePage(index);
       showPage('image');
     } else if (images.length > 0) {
-      changeHash('#image-' + (images.length - 1));
+      //changeHash('#image-' + (images.length - 1));
+      changeHash('#image-latest');
     } else {
       changeHash('#login');
     }
@@ -962,7 +1032,7 @@ var App = App || (function () {
     canvas.height = imageData.height;
     canvas.getContext('2d').putImageData(imageData, 0, 0);
     var imageType = type || 'image/jpeg';
-    var imageQuality = quality || 1;
+    var imageQuality = quality || 0.97;
     if (!!blobCallback) {
       return canvas.toBlob(blobCallback, imageType, imageQuality);
     } else {

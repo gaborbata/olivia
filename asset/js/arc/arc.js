@@ -211,7 +211,7 @@ ARC = ARC || (function () {
       filename: filename,
       compressed: compressedSize,
       original: originalSize,
-      timestamp: fileDate.isoString,
+      timestamp: fileDate.date + 'T' + fileDate.time,
       checksum: `0x${storedChecksum.toString(16).padStart(4, '0')}`,
     };
   }
