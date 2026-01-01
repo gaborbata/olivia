@@ -23,10 +23,6 @@ confirm() {
 if [ "$1" = "download" ]; then
   echo "*** download files"
   rclone copy -v -c r2:livike asset/content
-  echo "*** decrypt files"
-  sh crypt.sh dec
-  cp -v ./source/decrypted/images.json ./source/images.json
-  cp -v ./source/decrypted/app.json ./source/app.json
 elif [ "$1" = "sync" ]; then
   if confirm "Are you sure you want to sync all files?"; then
     echo "*** sync files"

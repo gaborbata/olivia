@@ -1,5 +1,13 @@
 source/
 crypt.sh
 *.log
-#asset/content/**
-#!asset/content/app.arc
+asset/content/**
+!asset/content/app.arc
+!asset/content/images.arc
+!asset/content/2024/
+!asset/content/2024/*.arc
+!asset/content/2025/
+!asset/content/2025/*.arc
+!asset/content/2026/
+!asset/content/2026/2026010*.arc
+!asset/content/2026/20260110*.arc

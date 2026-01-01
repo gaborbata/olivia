@@ -10,7 +10,7 @@ IMAGE_MULTIPLIER = 600
 IMAGE_SIZE_X = IMAGE_MULTIPLIER * 3
 IMAGE_SIZE_Y = IMAGE_MULTIPLIER * 2
 QUESTION_MARK = 'QQQ'
-TEXT_SEPARATOR = '-----'
+TEXT_SEPARATOR = '---'
 
 json = JSON.parse(File.read('./source/images.json')).sort_by { |entry| entry["id"] }
 
