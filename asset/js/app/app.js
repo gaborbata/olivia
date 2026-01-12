@@ -10,6 +10,7 @@ var App = App || (function () {
   var cacheBucket = 'cache__'
   var cacheExpirationMinutes = 10;
   var dataExt = ARC.extension;
+  var devMode = false;
 
   /* -------------------------------------------------------------------------- */
   /* page variables/functions                                                   */
@@ -96,6 +97,12 @@ var App = App || (function () {
     var video = page.querySelector('video');
     showElement(video, false);
     showElement(img, true);
+
+    if (document.fullscreenElement == video) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
 
     img.src = 'asset/image/loading.webp';
     img.alt = entry.title;
@@ -266,6 +273,22 @@ var App = App || (function () {
       }
     }
   });
+
+  function convertToJpeg(blob) {
+    if (blob.type == 'image/jpeg' || !blob.type.startsWith('image/')) {
+      return blob;
+    }
+    return createImageBitmap(blob)
+      .then(function (img) {
+        var canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        return new Promise(function (r) {
+          return canvas.toBlob(r, 'image/jpeg', 0.97);
+        });
+      });
+  }
 
   function prepareArchiveList() {
     //<li><a href="#template">template</a></li>
@@ -676,6 +699,9 @@ var App = App || (function () {
         return fetchConfig('asset/content/app.' + dataExt + noCache, appToken, 'app_' + dataExt)
           .then(function (configData) {
             appConfig = configData;
+            if (devMode) {
+              appConfig.storage = 'asset/content';
+            }
           });
       })
       .then(function () {
@@ -776,6 +802,47 @@ var App = App || (function () {
     } else if (hash == '#calendar' && images.length > 0) {
       initCalendar();
       showPage('calendar');
+    } else if (hash == '#dev-mode') {
+      devMode = true;
+      localStorage.clear();
+      document.querySelector('.navigation .img').style.filter = 'hue-rotate(280deg)';
+      changeHash("#login");
+      login(appTokenInMemory);
+    } else if (hash == '#download') {
+      if (!document.querySelector('#download-content')) {
+        var slink = document.createElement('a');
+        slink.className = 'hidden';
+        var link = document.createElement('a');
+        link.id = 'download-content';
+        link.href = '#';
+        link.textContent = 'v';
+        link.style = 'padding:4px 18px;border-radius:4px;background-color:lightyellow;border:2px solid lightgray;margin:0 0 0 2px;color:black;opacity:0.8;display:inline-block;vertical-align:baseline;height:36px;';
+        document.querySelector('#image .pagination').appendChild(link);
+        document.querySelector('#image .pagination').appendChild(slink);
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          var container = document.querySelector('#image .image-container');
+          var imgEl = container.querySelector('img');
+          var vidEl = container.querySelector('video');
+          var desc = container.querySelector('.image-description').textContent.split(' ').slice(-1).join('').replace(/\D/g, '-');
+          var url = imgEl.classList.contains('hidden') ? vidEl.src : imgEl.src;
+          fetch(url)
+            .then(function (response) {
+              return response.blob();
+            })
+            .then(function (blob) {
+              return convertToJpeg(blob);
+            })
+            .then(function (blob) {
+              var fileName = document.title.toLowerCase() + desc + Math.random().toString(16).slice(2) + '-' + blob.type.replaceAll('/', '.');
+              var downloadUrl = URL.createObjectURL(blob);
+              objectUrlsToRevoke.add(downloadUrl);
+              slink.href = downloadUrl;
+              slink.download = fileName;
+              slink.click();
+            });
+        });
+      }
     } else if (hash.startsWith('#image-') && images.length > 0) {
       var match = hash.match(/#image-([0-9]+)/);
       var index = Math.min(match ? parseInt(match[1]) : (images.length - 1), images.length - 1);

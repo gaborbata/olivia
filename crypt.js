@@ -39,13 +39,13 @@ var App = App || (function () {
     if (arcHeaderBytes.length != ARC.headerSize) {
       throw new Error('Invalid ARC header length: ' + arcHeaderBytes.length);
     }
-    console.log('Enc:', name.toUpperCase().padEnd(14, ' '), date.toISOString(), (Math.ceil((ARC.headerSize + encryptedFileBytes.length) / 1024.0) + ' kB').padStart(10, ' '));
+    console.log('Enc:', name.toUpperCase().padEnd(14, ' '), date.toLocaleString('hu').replace(' ', '').replace(' ', '').padEnd(20, ' '), (Math.ceil((ARC.headerSize + encryptedFileBytes.length) / 1024.0) + ' kB').padStart(10, ' '));
     return new Uint8Array(Array.from(arcHeaderBytes).concat(Array.from(encryptedFileBytes)).concat(ARC.endOfFile));
   }
 
   function decrypt(encrypted, password) {
     var arc = ARC.parseArcFile(encrypted);
-    console.log('Dec:', arc.header.filename.padEnd(14, ' '), arc.header.timestamp, (arc.checksum && arc.sizeMatches) ? ' OK' : ' ERROR');
+    console.log('Dec:', arc.header.filename.padEnd(14, ' '), arc.header.timestamp, (Math.ceil((arc.header.original) / 1024.0) + ' kB').padStart(10, ' '), (arc.checksum && arc.sizeMatches) ? ' OK' : ' ERROR');
     if (!arc.checksum || !arc.sizeMatches) {
       throw new Error('Corrupted file:', arc.header.filename);
     }
