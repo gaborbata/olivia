@@ -1,6 +1,7 @@
 #!/bin/sh
-# $ python -m http.server 8000
-# $ busybox httpd -f -p 8000
+# $ python -m http.server $port
+# $ busybox httpd -f -p $port
+# ruby -run -ehttpd . -p$port
 port=${1:-'8000'}
 echo Server listening on $port
-ruby -run -ehttpd . -p$port
+busybox httpd -f -v -p $port
