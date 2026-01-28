@@ -16,7 +16,7 @@ json = JSON.parse(File.read('./source/images.json')).sort_by { |entry| entry["id
 
 def parse(image, fname, ext)
   result = {}
-  name = fname.match(/[_-](20\d{2}-?\d{2}-?\d{2})[T_-]/)[1].gsub('-', '')
+  name = fname.match(/[_-]?(20\d{2}-?\d{2}-?\d{2})[T_-]/)[1].gsub('-', '')
   date = name.strip.insert(4, '-').insert(7, '-')
   details = (ext == '.webm' ? 'video.webm WEBM 0x0+0+0' : `gm identify "#{image}"`).sub(/.+?#{ext}/, ext).split(' ')
   resolution = details[2].split(/[+x]/)
