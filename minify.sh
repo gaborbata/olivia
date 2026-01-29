@@ -8,4 +8,5 @@ node vendor/uglifyjs/bin/uglifyjs asset/js/cache/lsc.js asset/js/arc/arc.es5.js 
 node vendor/uglifyjs/bin/uglifyjs asset/js/jxl/jxl_dec.js -c -m --ie -o asset/js/jxl/jxl_dec.min.js
 
 # minify css
-ruby -e "puts File.read('./asset/css/app.css').gsub(/[\n|\r]/,' ').gsub(/\s+/,' ').gsub(/(;|:|,|{|}|>) /,'\1').gsub(/(;| )({|}|>)/,'\2').strip" > ./asset/css/app.min.css
+#ruby -e "puts File.read('./asset/css/app.css').gsub(/[\n|\r]/,' ').gsub(/\s+/,' ').gsub(/(;|:|,|{|}|>) /,'\1').gsub(/(;| )({|}|>)/,'\2').strip" > ./asset/css/app.min.css
+node minifycss.js ./asset/css/app.css ./asset/css/app.min.css
