@@ -684,6 +684,9 @@ var App = App || (function () {
 
   var loginRedirectHash = null;
   function login(appToken) {
+    var navigation = document.querySelector('.navigation');
+    navigation.classList.add('navigation-loading');
+
     var noCache = '?date=' + new Date().toISOString().replaceAll(/\D/g, '').slice(0, 12);
 
     var precondition = new Promise(function (resolve, reject) {
@@ -714,6 +717,7 @@ var App = App || (function () {
           });
       })
       .then(function () {
+        navigation.classList.remove('navigation-loading');
         showElement(document.querySelector('#login-warning'), false);
         appTokenInMemory = appToken;
         LSC.set(appTokenKey, appToken);
@@ -728,6 +732,7 @@ var App = App || (function () {
         loginRedirectHash = null;
       })
       .catch(function (error) {
+        navigation.classList.remove('navigation-loading');
         if (error.loadError && appToken && appToken.length > 0) {
           console.error(error);
           showPage('error');

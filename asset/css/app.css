@@ -845,6 +845,16 @@ input[type="password"] {
   width: 100%;
 }
 
+.navigation-loading {
+  animation: navigation-loading 1s infinite;
+}
+
+@keyframes navigation-loading {
+  50% {
+    border-color: #8da05d;
+  }
+}
+
 .navigation .container {
   padding-bottom: 0;
   padding-top: 0;
@@ -963,8 +973,8 @@ input[type="password"] {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0;
-  height: 101%;
-  width: 101%;
+  height: 100.25%;
+  width: 100.25%;
   background-color: #000;
   z-index: 10;
   overflow: hidden;

@@ -1,2 +1,2 @@
 #!/bin/sh
-node convimages.js
+node convimages.js $*

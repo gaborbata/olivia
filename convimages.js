@@ -89,7 +89,7 @@ for (const fileName of files) {
     index++;
   }
 
-  const { name, landscape, ...detailsShort } = details;
+  const { name, landscape, width, height, ...detailsShort } = details;
   console.log(`*** ${baseName}: `, id, detailsShort);
 
   const movedFile = `./source/${id}${ext}`;
