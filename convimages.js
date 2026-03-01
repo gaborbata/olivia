@@ -102,7 +102,7 @@ for (const fileName of files) {
     json.push({
       id: `${id}${ext}`,
       title: details.title || id.replace(/_[pmx]/, '').replace('_', ' #'),
-      description: details.desc || '',
+      description: details.desc,
       date: details.date
     });
     stats.moved++;
@@ -135,7 +135,7 @@ for (const fileName of files) {
       json.push({
         id: `${id}.${format}`,
         title: details.title || id.replace(/_[pmx]/, '').replace('_', ' #'),
-        description: details.desc || '',
+        description: details.desc,
         date: details.date
       });
       stats.converted++;

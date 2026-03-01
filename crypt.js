@@ -144,7 +144,7 @@ if (action == 'enc') {
           json = json.sort(function (i1, i2) {
             return i1.date.localeCompare(i2.date) || i1.id.split('_')[2].localeCompare(i2.id.split('_')[2]) || i1.id.localeCompare(i2.id);
           });
-          originalString = JSON.stringify(json);
+          originalString = JSON.stringify(json, (key, value) => value === null ? undefined : value);
         }
 
         var date = new Date();
@@ -227,6 +227,15 @@ if (action == 'enc') {
               }
 
               !test && fs.writeFileSync(decryptedTarget + prefix + name, Uint8Array.from(Buffer.from(dec, 'latin1')));
+              try {
+                var header = ARC.parseArcHeader(original.slice(0, ARC.headerSize));
+                var date = new Date(header.timestamp);
+                date.setMinutes(header.filename.endsWith('M') ? 0 : 1);
+                date.setSeconds(parseInt(header.filename.slice(-3, -1)));
+                fs.utimesSync(decryptedTarget + prefix + name, date, date);
+              } catch (err) {
+                console.error(err);
+              }
             }
           });
         });
@@ -270,6 +279,13 @@ if (action == 'enc') {
           dec = JSON.stringify(json, null, 2);
         }
         !test && fs.writeFileSync(decryptedTarget + name, Uint8Array.from(Buffer.from(dec, 'latin1')))
+        try {
+          var header = ARC.parseArcHeader(original.slice(0, ARC.headerSize));
+          var date = new Date(header.timestamp);
+          fs.utimesSync(decryptedTarget + name, date, date);
+        } catch (err) {
+          console.error(err);
+        }
       }
     });
   });

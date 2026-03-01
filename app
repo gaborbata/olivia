@@ -1,7 +1,10 @@
 #!/bin/sh
 
 COMMAND="$1"
-shift
+
+if [ $# -gt 0 ]; then
+  shift
+fi
 
 if [ "$COMMAND" = "pull" ]; then
   sh pull.sh

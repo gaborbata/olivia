@@ -127,7 +127,7 @@ var App = App || (function () {
     };
 
     page.querySelector('.image-title').textContent = entry.title;
-    page.querySelector('.image-description').textContent = entry.description + ' (' + entry.date + ')';
+    page.querySelector('.image-description').textContent = (entry.description || '') + ' (' + entry.date + ')';
     var buttons = Array.from(page.querySelectorAll('.pagination .button'));
     buttons.forEach(function (button) {
       button.href = '#image-' + index;

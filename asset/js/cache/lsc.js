@@ -249,7 +249,14 @@
 
       // If a time is specified, store expiration info in localStorage
       if (time) {
-        setItem(expirationKey(key), (currentTime() + time).toString(expiryRadix));
+        try {
+          setItem(expirationKey(key), (currentTime() + time).toString(expiryRadix));
+        } catch (e) {
+          removeItem(expirationKey(key));
+          removeItem(key);
+          warn("Could not set expiration for item with key '" + key + "'", e);
+          return false;
+        }
       } else {
         // In case they previously set a time, remove that info from localStorage.
         removeItem(expirationKey(key));
