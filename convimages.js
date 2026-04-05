@@ -122,11 +122,13 @@ for (const fileName of files) {
     const resizeParam = !details.landscape ? `${IMAGE_SIZE_Y}x${IMAGE_SIZE_X}^` : `${IMAGE_SIZE_X}x${IMAGE_SIZE_Y}^`;
     const cropParam = !details.landscape ? `${IMAGE_SIZE_Y}x${IMAGE_SIZE_X}+0+0` : `${IMAGE_SIZE_X}x${IMAGE_SIZE_Y}+0+0`;
 
+    const noiseParam = baseName.includes("noise1") ? "+noise Uniform" : "";
+
     let cmd = "";
     if (format === 'webp') {
-      cmd = `gm convert -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} "${imagePath}" "${convertedFile}"`;
+      cmd = `gm convert -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
     } else {
-      cmd = `gm convert -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} "${imagePath}" "${convertedFile}"`;
+      cmd = `gm convert -flatten -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
     }
 
     const success = run(cmd) !== null;
