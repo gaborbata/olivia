@@ -13,6 +13,18 @@ var App = App || (function () {
   var devMode = false;
 
   /* -------------------------------------------------------------------------- */
+  /* navigation variables/functions                                             */
+  /* -------------------------------------------------------------------------- */
+  function setNavLoading(loadingFlag) {
+    var navigation = document.querySelector('.navigation');
+    if (loadingFlag) {
+      navigation.classList.add('navigation-loading');
+    } else {
+      navigation.classList.remove('navigation-loading');
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
   /* page variables/functions                                                   */
   /* -------------------------------------------------------------------------- */
   function getResponseBytes(response) {
@@ -684,8 +696,7 @@ var App = App || (function () {
 
   var loginRedirectHash = null;
   function login(appToken) {
-    var navigation = document.querySelector('.navigation');
-    navigation.classList.add('navigation-loading');
+    setNavLoading(true);
 
     var noCache = '?date=' + new Date().toISOString().replaceAll(/\D/g, '').slice(0, 12);
 
@@ -717,7 +728,7 @@ var App = App || (function () {
           });
       })
       .then(function () {
-        navigation.classList.remove('navigation-loading');
+        setNavLoading(false);
         showElement(document.querySelector('#login-warning'), false);
         appTokenInMemory = appToken;
         LSC.set(appTokenKey, appToken);
@@ -732,7 +743,7 @@ var App = App || (function () {
         loginRedirectHash = null;
       })
       .catch(function (error) {
-        navigation.classList.remove('navigation-loading');
+        setNavLoading(false);
         if (error.loadError && appToken && appToken.length > 0) {
           console.error(error);
           showPage('error');
@@ -802,10 +813,14 @@ var App = App || (function () {
     } else if (hash == '#logout') {
       logout();
     } else if (hash == '#archive' && images.length > 0) {
+      setNavLoading(true);
       prepareArchiveList();
+      setNavLoading(false);
       showPage('archive');
     } else if (hash == '#calendar' && images.length > 0) {
+      setNavLoading(true);
       initCalendar();
+      setNavLoading(false);
       showPage('calendar');
     } else if (hash == '#dev-mode') {
       devMode = true;
