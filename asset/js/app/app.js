@@ -675,8 +675,24 @@ var App = App || (function () {
           throw error;
         }
         var token = CryptoJS.AES.decrypt(appToken, appTokenKey).toString(CryptoJS.enc.Utf8);
-        var decrypted = decrypt(response, token);
 
+        // show last update timestamp
+        var arcHeader = ARC.parseArcHeader(response);
+        if (arcHeader.filename == 'IMAGES') {
+          var date = arcHeader.dateField.map(function (field) {
+            return field.toString().padStart(2, '0');
+          }).join('-');
+          var time = arcHeader.timeField.map(function (field) {
+            return field.toString().padStart(2, '0');
+          }).join(':');
+          var lastUpdate = document.querySelector('.image-container .image-last-update');
+          lastUpdate.querySelector('.date-time').textContent = date + ' ' + time;
+          setTimeout(function() {
+            lastUpdate.style.display = 'none';
+          }, 5000);
+        }
+
+        var decrypted = decrypt(response, token);
         var decryptedString = null;
         try {
           // assume zlib is used for config files
