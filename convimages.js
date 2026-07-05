@@ -48,9 +48,15 @@ function parseFileName(imagePath, baseName, ext) {
 const args = process.argv.slice(2);
 const qualityArg = parseInt(args[0]);
 const quality = isNaN(qualityArg) || qualityArg === 0 ? DEFAULT_IMAGE_QUALITY : qualityArg;
-const format = args[1] || DEFAULT_IMAGE_FORMAT;
+let format = args[1] || DEFAULT_IMAGE_FORMAT;
 
-console.log(`*** quality: ${quality}, format: ${format}`);
+let useFfmpeg = false;
+if (format.endsWith('-ffmpeg')) {
+  useFfmpeg = true;
+  format = format.replace('-ffmpeg', '');
+}
+
+console.log(`*** quality: ${quality}, format: ${format}, ffmpeg: ${useFfmpeg}`);
 
 const jsonPath = './source/images.json';
 let json = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
@@ -59,6 +65,11 @@ json.sort((a, b) => a.id.localeCompare(b.id));
 const isGraphicsMagickInstalled = run('gm version')?.includes('GraphicsMagick');
 if (!isGraphicsMagickInstalled) {
   throw new Error("GraphicsMagick not found");
+}
+
+const isFfmpegInstalled = run('ffmpeg -version')?.includes(`enable-lib${format}`);
+if (!isFfmpegInstalled && useFfmpeg) {
+  throw new Error("ffmpeg not found or image format is not supported");
 }
 
 const files = fs.readdirSync('./source/original')
@@ -119,13 +130,23 @@ for (const fileName of files) {
     else if (baseName.includes("rot180")) rotateParam = "-rotate 180";
     else if (baseName.includes("rot270")) rotateParam = "-rotate 270";
 
+    let ffRotateParam = "";
+    if (baseName.includes("rot90")) ffRotateParam = ",transpose=1";
+    else if (baseName.includes("rot180")) ffRotateParam = ",transpose=2";
+    else if (baseName.includes("rot270")) ffRotateParam = ",transpose=3";
+
     const resizeParam = !details.landscape ? `${IMAGE_SIZE_Y}x${IMAGE_SIZE_X}^` : `${IMAGE_SIZE_X}x${IMAGE_SIZE_Y}^`;
     const cropParam = !details.landscape ? `${IMAGE_SIZE_Y}x${IMAGE_SIZE_X}+0+0` : `${IMAGE_SIZE_X}x${IMAGE_SIZE_Y}+0+0`;
+
+    const ffSizeParam = !details.landscape ? `${IMAGE_SIZE_Y}:${IMAGE_SIZE_X}` : `${IMAGE_SIZE_X}:${IMAGE_SIZE_Y}`;
 
     const noiseParam = baseName.includes("noise1") ? "+noise Uniform" : "";
 
     let cmd = "";
-    if (format === 'webp') {
+
+    if (useFfmpeg) {
+      cmd = `ffmpeg -hide_banner -i "${imagePath}" -vf "scale=${ffSizeParam}:flags=lanczos:force_original_aspect_ratio=increase,crop=${ffSizeParam}${ffRotateParam}" -c:v lib${format} -effort 9 -q:v ${quality} "${convertedFile}"`;
+    } else if (format === 'webp') {
       cmd = `gm convert -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
     } else {
       cmd = `gm convert -flatten -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;

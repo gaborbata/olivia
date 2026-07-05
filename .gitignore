@@ -1,5 +1,6 @@
 source/
 crypt.sh
+run_convvideo.sh
 *.log
 asset/content/**
 !asset/content/app.arc
