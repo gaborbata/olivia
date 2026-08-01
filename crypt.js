@@ -107,7 +107,7 @@ var App = App || (function () {
 var arrayToString = arr => arr.reduce((str, code) => str + String.fromCharCode(code), '');
 var source = './source/';
 var target = './asset/content/';
-var decryptedTarget = './source/decrypted/';
+var decryptedTarget = './source/archive/';
 var extension = '.arc';
 var imagesName = 'images';
 var appConfigName = 'app';

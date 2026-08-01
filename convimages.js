@@ -21,7 +21,7 @@ function run(cmd) {
 
 function parseFileName(imagePath, baseName, ext, useFfmpeg) {
   const result = {};
-  const match = baseName.match(/[_-]?(20\d{2}-?\d{2}-?\d{2})[T_-]/);
+  const match = baseName.match(/[_-]?(20\d{2}-?\d{2}-?\d{2})[T_-\d]/);
   const name = match ? match[1].replace(/-/g, '') : '00000000';
   const date = `${name.substring(0, 4)}-${name.substring(4, 6)}-${name.substring(6, 8)}`;
 
@@ -84,7 +84,7 @@ function convertImages() {
   }
 
   const files = fs.readdirSync('./source/original')
-    .filter(f => /\.(png|jpg|jpeg|webp|webm|jxl)$/i.test(f))
+    .filter(f => /\.(png|jpg|jpeg|webp|webm|jxl|heic)$/i.test(f))
     .sort();
 
   const stats = { moved: 0, converted: 0, total: 0, source: files.length };
@@ -133,9 +133,9 @@ function convertImages() {
 
     const convertedFile = `./source/${id}.${format}`;
     if (!isAlreadyConvertedExt && isGraphicsMagickInstalled && !fs.existsSync(convertedFile)) {
-      if (!useFfmpeg) {
-        run(`gm mogrify -strip "${imagePath}"`);
-      }
+      //if (!useFfmpeg) {
+      //  run(`gm mogrify -strip "${imagePath}"`);
+      //}
       if (args[0] === 'clean') continue;
 
       let rotateParam = "";
@@ -160,9 +160,9 @@ function convertImages() {
       if (useFfmpeg) {
         cmd = `ffmpeg -hide_banner -noautorotate -i "${imagePath}" -vf "scale=${ffSizeParam}:flags=lanczos:force_original_aspect_ratio=increase,crop=${ffSizeParam}${ffRotateParam}" -c:v lib${format} -effort 9 -q:v ${quality} "${convertedFile}"`;
       } else if (format === 'webp') {
-        cmd = `gm convert -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
+        cmd = `gm convert -flatten -strip -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
       } else {
-        cmd = `gm convert -flatten -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
+        cmd = `gm convert -flatten -strip -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
       }
 
       const success = run(cmd) !== null;
