@@ -21,7 +21,7 @@ function run(cmd) {
 
 function parseFileName(imagePath, baseName, ext, useFfmpeg) {
   const result = {};
-  const match = baseName.match(/[_-]?(20\d{2}-?\d{2}-?\d{2})[T_-]/);
+  const match = baseName.match(/[_-]?(20\d{2}-?\d{2}-?\d{2})[T_-\d]/);
   const name = match ? match[1].replace(/-/g, '') : '00000000';
   const date = `${name.substring(0, 4)}-${name.substring(4, 6)}-${name.substring(6, 8)}`;
 
@@ -133,9 +133,9 @@ function convertImages() {
 
     const convertedFile = `./source/${id}.${format}`;
     if (!isAlreadyConvertedExt && isGraphicsMagickInstalled && !fs.existsSync(convertedFile)) {
-      if (!useFfmpeg) {
-        run(`gm mogrify -strip "${imagePath}"`);
-      }
+      //if (!useFfmpeg) {
+      //  run(`gm mogrify -strip "${imagePath}"`);
+      //}
       if (args[0] === 'clean') continue;
 
       let rotateParam = "";
