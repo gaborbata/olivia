@@ -84,7 +84,7 @@ function convertImages() {
   }
 
   const files = fs.readdirSync('./source/original')
-    .filter(f => /\.(png|jpg|jpeg|webp|webm|jxl)$/i.test(f))
+    .filter(f => /\.(png|jpg|jpeg|webp|webm|jxl|heic)$/i.test(f))
     .sort();
 
   const stats = { moved: 0, converted: 0, total: 0, source: files.length };
