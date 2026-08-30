@@ -160,9 +160,9 @@ function convertImages() {
       if (useFfmpeg) {
         cmd = `ffmpeg -hide_banner -noautorotate -i "${imagePath}" -vf "scale=${ffSizeParam}:flags=lanczos:force_original_aspect_ratio=increase,crop=${ffSizeParam}${ffRotateParam}" -c:v lib${format} -effort 9 -q:v ${quality} "${convertedFile}"`;
       } else if (format === 'webp') {
-        cmd = `gm convert -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
+        cmd = `gm convert -flatten -strip -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
       } else {
-        cmd = `gm convert -flatten -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
+        cmd = `gm convert -flatten -strip -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
       }
 
       const success = run(cmd) !== null;
