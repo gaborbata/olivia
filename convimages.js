@@ -118,7 +118,7 @@ function convertImages() {
     const isAlreadyConvertedExt = ['.webm', '.webp', '.jxl'].includes(ext);
 
     if (isAlreadyConvertedExt && !fs.existsSync(movedFile)) {
-      if (args[0] === 'clean') continue;
+      //if (args[0] === 'clean') continue;
 
       fs.copyFileSync(imagePath, movedFile);
       json.push({
@@ -136,33 +136,44 @@ function convertImages() {
       //if (!useFfmpeg) {
       //  run(`gm mogrify -strip "${imagePath}"`);
       //}
-      if (args[0] === 'clean') continue;
+      //if (args[0] === 'clean') continue;
 
+      // rotate image (graphicsmagick)
       let rotateParam = "";
       if (baseName.includes("rot90")) rotateParam = "-rotate 90";
       else if (baseName.includes("rot180")) rotateParam = "-rotate 180";
       else if (baseName.includes("rot270")) rotateParam = "-rotate 270";
 
+      // rotate image (ffmpeg)
       let ffRotateParam = "";
       if (baseName.includes("rot90")) ffRotateParam = ",transpose=1";
       else if (baseName.includes("rot180")) ffRotateParam = ",transpose=2";
       else if (baseName.includes("rot270")) ffRotateParam = ",transpose=3";
 
+      // resize and crop image (graphicsmagick)
       const resizeParam = !details.landscape ? `${IMAGE_SIZE_Y}x${IMAGE_SIZE_X}^` : `${IMAGE_SIZE_X}x${IMAGE_SIZE_Y}^`;
       const cropParam = !details.landscape ? `${IMAGE_SIZE_Y}x${IMAGE_SIZE_X}+0+0` : `${IMAGE_SIZE_X}x${IMAGE_SIZE_Y}+0+0`;
 
+      // resize and crop image (ffmpeg)
       const ffSizeParam = !details.landscape ? `${IMAGE_SIZE_Y}:${IMAGE_SIZE_X}` : `${IMAGE_SIZE_X}:${IMAGE_SIZE_Y}`;
 
+      // add noise (graphicsmagick)
       const noiseParam = baseName.includes("noise1") ? "+noise Uniform" : "";
+
+      // color profile conversion (graphicsmagick)
+      let profileParams = ""
+      if (['.heic'].includes(ext) || baseName.includes('dp3')) {
+        profileParams = "-profile vendor/profiles/DisplayP3-v4.icc -profile vendor/profiles/sRGB-v4.icc"
+      }
 
       let cmd = "";
 
       if (useFfmpeg) {
         cmd = `ffmpeg -hide_banner -noautorotate -i "${imagePath}" -vf "scale=${ffSizeParam}:flags=lanczos:force_original_aspect_ratio=increase,crop=${ffSizeParam}${ffRotateParam}" -c:v lib${format} -effort 9 -q:v ${quality} "${convertedFile}"`;
       } else if (format === 'webp') {
-        cmd = `gm convert -flatten -strip -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
+        cmd = `gm convert -flatten -strip ${profileParams} -quality ${quality} -define webp:method=6 -define webp:auto-filter=true -define webp:image-hint=picture -define webp:use-sharp-yuv=true -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
       } else {
-        cmd = `gm convert -flatten -strip -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
+        cmd = `gm convert -flatten -strip ${profileParams} -quality ${quality} -define jxl:effort=9 -resize "${resizeParam}" -gravity Center -crop ${cropParam} ${rotateParam} ${noiseParam} "${imagePath}" "${convertedFile}"`;
       }
 
       const success = run(cmd) !== null;
