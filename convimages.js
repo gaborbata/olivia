@@ -140,6 +140,18 @@ function convertImages() {
 
       // rotate image (graphicsmagick)
       let rotateParam = "";
+      // auto rotate, if exists in exif
+      // Value 1: Normal (0° rotation, horizontal)
+      // Value 2: Mirror horizontal (flipped left-to-right)
+      // Value 3: Rotate 180° (upside-down)
+      // Value 4: Mirror vertical (flipped upside-down)
+      // Value 5: Mirror horizontal and rotate 270° CW
+      // Value 6: Rotate 90° CW (common when holding a smartphone upright)
+      // Value 7: Mirror horizontal and rotate 90° CW
+      // Value 8: Rotate 270° CW (or 90° counterclockwise)
+      if ((run(`gm identify -format "%[EXIF:Orientation]" "${imagePath}"`) || "").includes("6")) {
+        rotateParam = "-rotate 90"
+      }
       if (baseName.includes("rot90")) rotateParam = "-rotate 90";
       else if (baseName.includes("rot180")) rotateParam = "-rotate 180";
       else if (baseName.includes("rot270")) rotateParam = "-rotate 270";
