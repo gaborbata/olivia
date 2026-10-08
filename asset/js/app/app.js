@@ -507,6 +507,7 @@ var App = App || (function () {
     });
   }
 
+  /*
   function encrypt(message, password) {
     var salt = CryptoJS.lib.WordArray.random(cryptoConfig.saltSize / 8);
     var iv = CryptoJS.lib.WordArray.random(cryptoConfig.ivSize / 8);
@@ -520,6 +521,7 @@ var App = App || (function () {
     var endOfFile = new Uint8Array(ARC.eof);
     return new Uint8Array(Array.from(arcHeaderBytes).concat(Array.from(encryptedFileBytes)).concat(endOfFile));
   }
+  */
 
   function decrypt(encrypted, password) {
     if (encrypted[0] != ARC.memberFlag || encrypted[1] != ARC.storeMethod) {
@@ -572,6 +574,7 @@ var App = App || (function () {
     return result;
   }
 
+  /*
   function wordArrayToByteArrayV1(wordArray) {
     var words = wordArray.words;
     var sigBytes = wordArray.sigBytes;
@@ -581,6 +584,7 @@ var App = App || (function () {
     }
     return bytes;
   }
+  */
 
   function byteArrayToWordArray(bytes, offset, eofSize) {
     var offset = offset || 0;
@@ -615,6 +619,7 @@ var App = App || (function () {
     return CryptoJS.lib.WordArray.create(words, bytesLength);
   }
 
+  /*
   function byteArrayToWordArrayV1(bytes, offset, eofSize) {
     var offset = offset || 0;
     var eofSize = eofSize || 0;
@@ -625,6 +630,7 @@ var App = App || (function () {
     }
     return CryptoJS.lib.WordArray.create(words, bytesLength);
   }
+  */
 
   /* -------------------------------------------------------------------------- */
   /* login/logout handling                                                      */
@@ -1077,6 +1083,7 @@ var App = App || (function () {
     img.src = testImage;
   }
 
+  /*
   var decodeJxlSrcToImageData = function (source, meta) {
     return fetch(source)
       .then(function (res) {
@@ -1085,6 +1092,7 @@ var App = App || (function () {
         return decodeJxlBufferToImageData(buffer, meta);
       })
   }
+  */
 
   var jxlWorker = null;
   var decodeJxlBufferToImageData = function (imageBuffer, meta) {
@@ -1109,6 +1117,7 @@ var App = App || (function () {
     });
   };
 
+  /*
   var decodeJxlBufferToImageDataNewWorker = function (imageBuffer, meta) {
     return new Promise(function (resolve, reject) {
       var worker = new Worker('asset/js/jxl/jxl_dec.min.js');
@@ -1128,6 +1137,7 @@ var App = App || (function () {
       worker.postMessage({ imageBuffer: imageBuffer, meta: meta });
     });
   };
+  */
 
   var imageDataToDataUrl = function (imageData, blobCallback, type, quality) {
     var canvas = document.createElement('canvas');
@@ -1147,6 +1157,7 @@ var App = App || (function () {
     return typeof WebAssembly === 'object';
   }
 
+  /*
   function testJxlDecode() {
     var jxlImage = 'data:image/jxl;base64,/woAkAEB2ABrTgsAgAqVUcYNXs71fPmhw2LaxnWGttq2AAAAAB7AvxLGZnthkJBwBBsXTdwcVHP7gMhQSQI='
     decodeJxlSrcToImageData(jxlImage, 'test')
@@ -1159,6 +1170,7 @@ var App = App || (function () {
         console.error('error', error);
       });
   }
+  */
 
   /* -------------------------------------------------------------------------- */
   /* initialize page                                                            */
@@ -1186,9 +1198,9 @@ var App = App || (function () {
   /* -------------------------------------------------------------------------- */
   return {
     version: '2.0',
-    jxlSupported: jxlSupported,
-    testJxlDecode: testJxlDecode,
-    isWebAssemblySupported: isWebAssemblySupported
+    //jxlSupported: function () { return jxlSupported },
+    //testJxlDecode: testJxlDecode,
+    //isWebAssemblySupported: isWebAssemblySupported
   };
 
 })();
